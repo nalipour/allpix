@@ -93,6 +93,11 @@
 #include "G4Positron.hh"
 #include "G4Proton.hh"
 
+//nalipour
+#include "G4PAIModel.hh"
+#include "G4PAIPhotonModel.hh"
+
+
 #include "CLHEP/Units/SystemOfUnits.h"
 using namespace CLHEP;
 
@@ -100,7 +105,11 @@ using namespace CLHEP;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
 AllPixPhysicsList::AllPixPhysicsList() : G4VModularPhysicsList()
+										, fConfig(0) //nalipour PAI
 {
+  fConfig = G4LossTableManager::Instance()->EmConfigurator(); //nalipour PAI
+  G4LossTableManager::Instance()->SetVerbose(1); //nalipour PAI
+
   G4LossTableManager::Instance();
   defaultCutValue = 0.010*mm;
   cutForGamma     = defaultCutValue;
@@ -224,6 +233,10 @@ void AllPixPhysicsList::AddAllPixPhysicsList(const G4String& name)
     AddAllPixPhysicsList("FTFP_BERT");
 
   }
+  else if (name == "pai")  // nalipour PAI
+    {
+      AddPAIModel(name);
+    }
 
   /*
   else if (name == "FTFP_BERT") {
@@ -471,6 +484,44 @@ void AllPixPhysicsList::List()
 	 << G4endl; 
   G4cout << "                            QGSP_BERT_EMX QGSP_BERT_HP QGSP_BIC QGSP_BIC_HP LIVERMORE_LIVERMORE_FTFP_BERT" 
 	 << G4endl; 
+}
+
+//nalipour PAI
+void AllPixPhysicsList::AddPAIModel(const G4String& modname)
+{
+  theParticleIterator->reset();
+  while ((*theParticleIterator)())
+  {
+    G4ParticleDefinition* particle = theParticleIterator->value();
+    G4String partname = particle->GetParticleName();
+    if(partname == "e-" || partname == "e+") {
+      NewPAIModel(particle, modname, "eIoni");
+
+    } else if(partname == "mu-" || partname == "mu+") {
+      NewPAIModel(particle, modname, "muIoni");
+
+    } else if(partname == "proton" ||
+              partname == "pi+" ||
+              partname == "pi-"   
+              ) {
+      NewPAIModel(particle, modname, "hIoni");
+    }
+  }
+}
+void AllPixPhysicsList::NewPAIModel(const G4ParticleDefinition* part, 
+                              const G4String& modname,
+                              const G4String& procname)
+{
+  G4String partname = part->GetParticleName();
+  if(modname == "pai") {
+    G4PAIModel* pai = new G4PAIModel(part,"PAIModel");
+    fConfig->SetExtraEmModel(partname,procname,pai,"",
+                              0.0,100.*TeV,pai);
+  } else if(modname == "pai_photon") {
+    G4PAIPhotonModel* pai = new G4PAIPhotonModel(part,"PAIPhotonModel");
+    fConfig->SetExtraEmModel(partname,procname,pai,"",
+                              0.0,100.*TeV,pai);
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

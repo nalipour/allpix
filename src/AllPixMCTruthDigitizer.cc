@@ -69,11 +69,17 @@ void AllPixMCTruthDigitizer::Digitize(){
 
   G4double x0, y0, z0, xp, yp, zp=0;
 
+  G4double MC_deposited_energy=0.0;
+  int pixelX=-10;
+  int pixelY=-10;
+
   for(G4int itr  = 0 ; itr < nEntries ; itr++) {
 
     tempPixel.first  = (*hitsCollection)[itr]->GetPixelNbX();
     tempPixel.second = (*hitsCollection)[itr]->GetPixelNbY();
     pixelsContent[tempPixel] += (*hitsCollection)[itr]->GetEdep();
+
+    MC_deposited_energy+=(*hitsCollection)[itr]->GetEdep();
 
     G4double xpos=(*hitsCollection)[itr]->GetPosWithRespectToPixel().x();
     G4double ypos=(*hitsCollection)[itr]->GetPosWithRespectToPixel().y();
@@ -87,65 +93,22 @@ void AllPixMCTruthDigitizer::Digitize(){
       G4double local_xpos=(*hitsCollection)[itr]->GetLocalPosition().x();
       G4double local_ypos=(*hitsCollection)[itr]->GetLocalPosition().y();
       G4double local_zpos=(*hitsCollection)[itr]->GetLocalPosition().z();
-    //G4cout << "xposLocal=" << tempPixel.first*
 
-    // if (TMath::Abs(zpos-thickness/2.0)<0.0009) // I take the hit position at the middle of the sensor because that's where the hit in EUTelescope is projected
-    //   {
-    // 	// G4cout << "itr=" <<  itr << G4endl;
-    // 	AvgPosX=global_xpos;
-    // 	AvgPosY=global_ypos;
-    // 	AvgPosZ=global_zpos;
-    // 	//G4cout << zpos << " ******* Half Thickness: x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-    //   }
-
+      pixelX=(*hitsCollection)[itr]->GetPixelNbX();
+      pixelY=(*hitsCollection)[itr]->GetPixelNbY();
 
     if (itr==0)
       {
-
-	// G4cout << "itr=" << itr << ", xpos=" << xpos << ", ypos=" << ypos << ", zpos=" << zpos << G4endl;
-	// G4cout << "Local Pos: itr=" << itr << ", xpos=" << tempPixel.first*gD->GetPixelX()-256./2.*gD->GetPixelX()+xpos+gD->GetPixelX()/2.0 << ", ypos=" << tempPixel.second*gD->GetPixelX()-256./2.*gD->GetPixelX()+ypos+gD->GetPixelX()/2.0 << ", zpos=" << zpos << G4endl;
 	AvgPosX=global_xpos;
 	AvgPosY=global_ypos;
 	AvgPosZ=global_zpos;
 
-	  LocalAvgPosX=local_xpos;
-	  LocalAvgPosY=local_ypos;
-	  LocalAvgPosZ=local_zpos;
-	// x0=global_xpos;
-	// y0=global_ypos;
-	// z0=global_zpos;
-	// G4cout << zpos << " ******* itr=0: GLOBAL x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-	// G4cout << zpos << " ******* itr=0: x=" << xpos << ", y=" << ypos << ", z=" << zpos << G4endl;
+	LocalAvgPosX=local_xpos;
+	LocalAvgPosY=local_ypos;
+	LocalAvgPosZ=local_zpos;
       }
-    if (itr==nEntries-1)
-      {
-	// G4cout << "itr=" << itr << ", xpos=" << xpos << ", ypos=" << ypos << ", zpos=" << zpos << G4endl;
-	// G4cout << "Local Pos: itr=" << itr << ", xpos=" << tempPixel.first*gD->GetPixelX()-256./2.*gD->GetPixelX()+xpos+gD->GetPixelX()/2.0 << ", ypos=" << tempPixel.second*gD->GetPixelX()-256./2.*gD->GetPixelX()+ypos+gD->GetPixelX()/2.0 << ", zpos=" << zpos << G4endl;
-	// G4cout << zpos << " ******* itr=last: GLOBAL x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-	// G4cout << zpos << " ******* itr=last: x=" << xpos << ", y=" << ypos << ", z=" << zpos << G4endl;
-    	// G4cout << "Last iteration=" << itr << G4endl;
-    	// xp=global_xpos;
-    	// yp=global_ypos;
-    	// zp=global_zpos;
-    	// G4cout << zpos << " ******* itr=Last: x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-      }
- 
-    // if (TMath::Abs(zpos)<0.002) // I take the hit position at the middle of the sensor because that's where the hit in EUTelescope is projected
-    //   {
-    // 	G4cout << zpos << " ******* z=0: x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-    //   }
-
-    // if (TMath::Abs(zpos-thickness)<0.002) // I take the hit position at the middle of the sensor because that's where the hit in EUTelescope is projected
-    //   {
-    // 	G4cout << zpos << " ******* z=thickness: x=" << global_xpos << ", y=" << global_ypos << ", z=" << global_zpos << G4endl;
-    //   }
-
   }
 
-  // G4cout << "length=" << TMath::Sqrt((x0-xp)*(x0-xp)+(y0-yp)*(y0-yp)+(z0-zp)*(z0-zp)) << G4endl;
-  // G4cout << "AvgPosX=" << AvgPosX << ", AvgPosY=" << AvgPosY << ", AvgPosZ=" << AvgPosZ << G4endl;
-  // Now create digits, one per pixel
-  // Second entry in the map is the energy deposit in the pixel
   map<pair<G4int, G4int>, G4double >::iterator pCItr = pixelsContent.begin();
 
   // NOTE that there is a nice interface which provides useful info for hits.
@@ -159,32 +122,43 @@ void AllPixMCTruthDigitizer::Digitize(){
   // provides you with a pointer to the geometry description.
   // See class AllPixGeoDsc !
 
-  for( ; pCItr != pixelsContent.end() ; pCItr++)
+  // for( ; pCItr != pixelsContent.end() ; pCItr++)
+  //   {
+
+  //     if((*pCItr).second > 0) // over threshold !
+  // 	{
+  // 	  // Create one digit per pixel, I need to look at all the pixels first
+  // 	  AllPixMCTruthDigit * digit = new AllPixMCTruthDigit;
+  // 	  digit->SetPixelIDX((*pCItr).first.first);
+  // 	  digit->SetPixelIDY((*pCItr).first.second);
+  // 	  digit->SetPixelCounts((*pCItr).second/keV);
+  // 	  G4cout << "Energy=" << (*pCItr).second/keV << G4endl;
+
+  // 	  G4cout << "X: " << (*pCItr).first.first << ", Y: " << (*pCItr).first.second << G4endl;
+  // 	  G4cout << "Global: x=" << AvgPosX << ", y=" << AvgPosY << ", z=" << AvgPosZ << G4endl;
+  // 	  G4cout << "Local: x=" << LocalAvgPosX << ", y=" << LocalAvgPosY << ", z=" << LocalAvgPosZ << G4endl;
+
+
+  // 	  // ====== TO be corrected later==================== //
+  // 	  digit->Set_posX_WithRespectoToPixel(AvgPosX);// /nEntries);
+  // 	  digit->Set_posY_WithRespectoToPixel(AvgPosY); // /nEntries);
+  // 	  digit->Set_posZ_WithRespectoToPixel(AvgPosZ); // /nEntries);
+  // 	  //===================================================//
+  // 	  // G4cout << "dEdX : " << (*pCItr).second/keV << endl;
+
+  // 	  m_digitsCollection->insert(digit);
+  // 	}
+  //   }
+
+  if(MC_deposited_energy>0)
     {
-
-      if((*pCItr).second > 0) // over threshold !
-	{
-	  // Create one digit per pixel, I need to look at all the pixels first
-	  AllPixMCTruthDigit * digit = new AllPixMCTruthDigit;
-	  digit->SetPixelIDX((*pCItr).first.first);
-	  digit->SetPixelIDY((*pCItr).first.second);
-	  digit->SetPixelCounts((*pCItr).second/keV);
-	  G4cout << "Energy=" << (*pCItr).second/keV << G4endl;
-
-	  G4cout << "X: " << (*pCItr).first.first << ", Y: " << (*pCItr).first.second << G4endl;
-	  G4cout << "Global: x=" << AvgPosX << ", y=" << AvgPosY << ", z=" << AvgPosZ << G4endl;
-	  G4cout << "Local: x=" << LocalAvgPosX << ", y=" << LocalAvgPosY << ", z=" << LocalAvgPosZ << G4endl;
-
-
-	  // ====== TO be corrected later==================== //
-	  digit->Set_posX_WithRespectoToPixel(AvgPosX);// /nEntries);
-	  digit->Set_posY_WithRespectoToPixel(AvgPosY); // /nEntries);
-	  digit->Set_posZ_WithRespectoToPixel(AvgPosZ); // /nEntries);
-	  //===================================================//
-	  // G4cout << "dEdX : " << (*pCItr).second/keV << endl;
-
-	  m_digitsCollection->insert(digit);
-	}
+      AllPixMCTruthDigit * digit = new AllPixMCTruthDigit;
+      digit->SetPixelEnergyDep(MC_deposited_energy/keV);
+      digit->SetPixelIDX(pixelX); // An ugly hack to have the same coordinate system as the test-beam
+      digit->SetPixelIDY(pixelY);	 
+      digit->IncreasePixelCounts(); // Counting mode
+      m_digitsCollection->insert(digit);
+	
     }
 
   G4int dc_entries = m_digitsCollection->entries();
