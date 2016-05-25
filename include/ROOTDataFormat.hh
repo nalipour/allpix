@@ -38,6 +38,11 @@ public:
   void add_posY_WithRespectToPixel(Double_t pos) {posY_WithRespectToPixel.push_back(pos);};
   void add_posZ_WithRespectToPixel(Double_t pos) {posZ_WithRespectToPixel.push_back(pos);};
 
+  void add_posX_Local(Double_t pos) {posX_Local.push_back(pos);};
+  void add_posY_Local(Double_t pos) {posY_Local.push_back(pos);};
+  void add_posZ_Local(Double_t pos) {posZ_Local.push_back(pos);};
+
+
   vector<Int_t> get_posX() {return posX;};
   vector<Int_t> get_posY() {return posY;};
   vector<Double_t> get_energyTotal() {return energyTotal;};
@@ -46,6 +51,10 @@ public:
   vector<Double_t> get_posX_WithRespectToPixel() {return posX_WithRespectToPixel;};
   vector<Double_t> get_posY_WithRespectToPixel() {return posY_WithRespectToPixel;};
   vector<Double_t> get_posZ_WithRespectToPixel() {return posZ_WithRespectToPixel;};
+
+  vector<Double_t> get_posX_Local() {return posX_Local;};
+  vector<Double_t> get_posY_Local() {return posY_Local;};
+  vector<Double_t> get_posZ_Local() {return posZ_Local;};
 
 
 /*
@@ -84,6 +93,11 @@ private:
   std::vector<Double_t> posX_WithRespectToPixel;
   std::vector<Double_t> posY_WithRespectToPixel;
   std::vector<Double_t> posZ_WithRespectToPixel;
+
+
+  std::vector<Double_t> posX_Local;
+  std::vector<Double_t> posY_Local;
+  std::vector<Double_t> posZ_Local;
 /*  Int_t trackID;
   Int_t pdgIdTrack;
   Int_t parentID;

@@ -29,5 +29,14 @@ void AllPixDigitInterface::Set_posZ_WithRespectoToPixel(G4double /*pos*/	){;}
 G4double AllPixDigitInterface::Get_posX_WithRespectoToPixel(){return 0;}
 G4double AllPixDigitInterface::Get_posY_WithRespectoToPixel(){return 0;}
 G4double AllPixDigitInterface::Get_posZ_WithRespectoToPixel(){return 0;}
+
+void AllPixDigitInterface::Set_posX_Local(G4double /*pos*/){;}
+void AllPixDigitInterface::Set_posY_Local(G4double /*pos*/){;}
+void AllPixDigitInterface::Set_posZ_Local(G4double /*pos*/	){;}
+G4double AllPixDigitInterface::Get_posX_Local(){return 0;}
+G4double AllPixDigitInterface::Get_posY_Local(){return 0;}
+G4double AllPixDigitInterface::Get_posZ_Local(){return 0;}
+
+
 void  AllPixDigitInterface::SetPixelEnergyMC(G4double){;}
 G4double  AllPixDigitInterface::GetPixelEnergyMC(){return 0;}

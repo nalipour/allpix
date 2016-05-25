@@ -194,6 +194,7 @@ def convertRun( inputTarFile, outputFileName ):
                 event.addCollection ( DUTSetup, 'DUTSetup' )
 
         # ID encoder info
+        # encodingString = 'sensorID:5,sparsePixelType:4'
         encodingString = 'sensorID:5,sparsePixelType:5'
 
         # Telescope data collection
@@ -214,6 +215,7 @@ def convertRun( inputTarFile, outputFileName ):
                 idEncoder_DUT.reset()
                 #idEncoder_DUT['sensorID'] = int( sensorID ) - 500 + 6 # cannot fit 500 in 5 bits!! FIXME
                 idEncoder_DUT['sensorID'] = i+6 # cannot fit 500 in 5 bits!! FIXME
+                #idEncoder_DUT['sparsePixelType'] = 4
                 idEncoder_DUT['sparsePixelType'] = 2
                 idEncoder_DUT.setCellID( planeData )
             
@@ -236,6 +238,7 @@ def convertRun( inputTarFile, outputFileName ):
 
             idEncoder_Telescope.reset()
             idEncoder_Telescope['sensorID'] = int( sensorID ) - 300 # cannot fit 300 in 5 bits!! FIXME
+            # idEncoder_Telescope['sparsePixelType'] = 4
             idEncoder_Telescope['sparsePixelType'] = 2
             idEncoder_Telescope.setCellID( planeData )
             

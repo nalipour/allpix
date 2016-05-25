@@ -302,10 +302,11 @@ void AllPixDetectorConstruction::SetDetectorRotation(G4ThreeVector rot){
 		exit(1);
 	}
 
+	// nalipour
 	m_rotVector[*m_detIdItr] = new G4RotationMatrix();
+	m_rotVector[*m_detIdItr]->rotateZ(rot.z());
 	m_rotVector[*m_detIdItr]->rotateX(rot.x());
 	m_rotVector[*m_detIdItr]->rotateY(rot.y());
-	m_rotVector[*m_detIdItr]->rotateZ(rot.z());
 
 	//G4cout << m_rotVector[m_nRotations]->getPhi() << " "
 	// << m_rotVector[m_nRotations]->getPsi() << " "
@@ -330,9 +331,10 @@ void AllPixDetectorConstruction::SetTestStructurePosition(G4ThreeVector pos){
 
 void AllPixDetectorConstruction::SetTestStructureRotation(G4ThreeVector rot){
 	m_rotVectorTestStructure[m_nTestRotation] = new G4RotationMatrix();
+	m_rotVectorTestStructure[m_nTestRotation]->rotateZ(rot.z());
 	m_rotVectorTestStructure[m_nTestRotation]->rotateX(rot.x());
 	m_rotVectorTestStructure[m_nTestRotation]->rotateY(rot.y());
-	m_rotVectorTestStructure[m_nTestRotation]->rotateZ(rot.z());
+
 	m_nTestRotation++;
 }
 
@@ -628,7 +630,7 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 			posWrapper.setY(posWrapper.y() + m_vectorWrapperEnhancement[*detItr].y()/2.);
 			posWrapper.setZ(posWrapper.z() + m_vectorWrapperEnhancement[*detItr].z()/2.);
 		}
-
+		G4cout << "nalipour: posWrapper=" << posWrapper << G4endl;
 		// starting at user position --> vector pos
 		m_wrapper_phys[(*detItr)] = new G4PVPlacement(
 				//rot[m_detectorId],
@@ -881,6 +883,7 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 
 		// Store the hit Collection name in the geometry
 		geoMap[*detItr]->SetHitsCollectionName( aTrackerSD->GetHitsCollectionName() );
+		G4cout << "nalipour: pos detectorConstruction: " << (posWrapper + posDevice) << G4endl;
 
 		G4cout << "          detector " << (*detItr) << " ... done" << G4endl;
 

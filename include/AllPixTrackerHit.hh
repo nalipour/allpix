@@ -72,6 +72,8 @@ public:
   void SetEdep     (G4double de)      { edep = de; };
   void SetPos      (G4ThreeVector xyz){ pos = xyz; };
   void SetPosWithRespectToPixel (G4ThreeVector pxzy) { m_posWithRespectToPixel = pxzy; };
+  void SetGlobalPosition (G4ThreeVector pxzy) { GlobalPosition = pxzy; }; // nalipour
+  void SetLocalPosition (G4ThreeVector pxzy) { LocalPosition = pxzy; }; // nalipour
   void SetProcessName(G4String process) { processName = process; };
   void SetTrackPdgId(G4int pdgId) { pdgIdTrack = pdgId; };
   void SetTrackVolumeName(G4String vn) { trackVolumeName = vn; };
@@ -90,6 +92,8 @@ public:
   G4double GetEdep()    { return edep; };
   G4ThreeVector GetPos(){ return pos; };
   G4ThreeVector GetPosWithRespectToPixel() { return m_posWithRespectToPixel; };
+  G4ThreeVector GetGlobalPosition() { return GlobalPosition; }; // nalipour
+  G4ThreeVector GetLocalPosition() { return LocalPosition; }; // nalipour
   G4String GetProcessName() { return processName; };
   G4int GetTrackPdgId() { return pdgIdTrack; };
   G4String GetTrackVolumeName() {return trackVolumeName;};
@@ -109,6 +113,8 @@ private:
   G4double      edep;
   G4ThreeVector pos;
   G4ThreeVector m_posWithRespectToPixel;
+  G4ThreeVector GlobalPosition; // nalipour
+  G4ThreeVector LocalPosition; // nalipour
   G4String      processName;
   G4int         pdgIdTrack;
   G4String      trackVolumeName;

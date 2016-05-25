@@ -187,51 +187,78 @@ G4bool AllPixTrackerSD::ProcessHits(G4Step * aStep, G4TouchableHistory *)
 	G4int copyIDy_post = -1;
 	G4int copyIDx_post = -1;
 	G4ThreeVector correctedPos(0,0,0);
+	G4ThreeVector globalPosition(0, 0, 0); // nalipour
+	G4ThreeVector localPosition(0, 0, 0); // nalipour
 
 	if (m_thisIsAPixelDetector) {
 		// This positions are global, I will bring them to pixel-centered frame
 		// I can use the physical volumes for that
-		G4ThreeVector prePos = preStepPoint->GetPosition();
 
+	  G4ThreeVector prePos = preStepPoint->GetPosition(); // Global position 
+	  correctedPos=touchablepre->GetHistory()->GetTopTransform().TransformPoint(prePos); // Position within the pixel
 
-		// Find the inverse rotation
-		//G4RotationMatrix invRot2 = CLHEP::inverseOf(*m_rotationOfWrapper);
-		G4RotationMatrix invRot = m_rotationOfWrapper->inverse().inverse();
+	  // depth 1 --> x
+	  // depth 0 --> y
+	  copyIDy_pre  = touchablepre->GetCopyNumber();
+	  copyIDx_pre  = touchablepre->GetCopyNumber(1);
 
-		// Absolute center of Si wafer
-		G4ThreeVector absCenterOfDetector = m_absolutePosOfWrapper ;
-		//G4cout << "Absolute position of Wrapper : " << absCenterOfDetector << endl;
+	  
 
-		// Bring the detector (Si layer) to the Origin
-		correctedPos = prePos;
-		correctedPos -= absCenterOfDetector;
-		// apply rotation !
-		correctedPos = invRot * correctedPos;
+	  G4ThreeVector localPos(m_gD->GetPixelX()*copyIDx_pre+correctedPos.x()-(m_gD->GetNPixelsX()-1)*m_gD->GetPixelX()/2.0,
+				 m_gD->GetPixelY()*copyIDy_pre+correctedPos.y()-(m_gD->GetNPixelsY()-1)*m_gD->GetPixelY()/2.0,
+				 correctedPos.z());
 
-		// Now let's finally provide pixel-centered coordinates for each hit
-		// Build the center of the Pixel
-		G4ThreeVector centerOfPixel(
-				m_gD->GetPixelX()*TMath::FloorNint(correctedPos.x() / m_gD->GetPixelX()) + m_gD->GetHalfPixelX(),
-				m_gD->GetPixelY()*TMath::FloorNint(correctedPos.y() / m_gD->GetPixelY()) + m_gD->GetHalfPixelY(),
-				0.); // in the middle of the tower
+	  localPosition=localPos;
+	  globalPosition=prePos; //    nalipour: globalPosition
+	  // G4cout << "Global position:" << globalPosition << G4endl;
+	  // G4cout << "Local position:" << localPosition << G4endl;
+	  // G4cout << "Position within pixel=" << correctedPos << G4endl;
+	  // G4cout << "x=" << copyIDx_pre << ", x=" << copyIDy_pre << G4endl;
 
-		// The position within the pixel !!!
-		correctedPos = correctedPos - centerOfPixel - m_relativePosOfSD;
-
-		//G4cout << "uncorrectedPos : " << prePos.x()/um << " " << prePos.y()/um
-		//	   << " " << prePos.z()/um << " [um]" << G4endl;
-
-		//G4cout << "correctedPos : " << correctedPos.x()/um << " " << correctedPos.y()/um
-		//	   << " " << correctedPos.z()/um << " [um]" << G4endl;
-
-		//G4cout << "(" << shi << ") "<<	 correctedPos.z()/um << " " ;
-		//G4cout << TString::Format("(%02.0f) %02.1f ",shi,correctedPos.z()/um);
-
-		// depth 1 --> x
-		// depth 0 --> y
-		copyIDy_pre  = touchablepre->GetCopyNumber();
-		copyIDx_pre  = touchablepre->GetCopyNumber(1);
-
+	  // Find the inverse rotation
+	  //G4RotationMatrix invRot2 = CLHEP::inverseOf(*m_rotationOfWrapper);
+	  /*	  G4RotationMatrix invRot = m_rotationOfWrapper->inverse(); //.inverse();
+	  
+	  // Absolute center of Si wafer
+	  G4ThreeVector absCenterOfDetector = m_absolutePosOfWrapper ;
+	  // G4cout << "Absolute position of Wrapper : " << absCenterOfDetector << endl;
+	  // G4cout << "Rotation matrix:" << *m_rotationOfWrapper << G4endl;
+	  
+	  // G4ThreeVector testpoint(-7.0125, -7.0125, 0);
+	  // G4ThreeVector testpointLocal=(*m_rotationOfWrapper)*testpoint;
+	  // G4cout << "TestpointLocal=" << testpointLocal << G4endl;
+	  
+	  // Bring the detector (Si layer) to the Origin
+	  correctedPos = prePos;
+	  
+	  // apply rotation !
+	  correctedPos -= absCenterOfDetector;
+	  correctedPos = invRot * correctedPos;
+	  localPosition=correctedPos; // nalipour
+	  
+	  //G4cout << "pos1: " << invRot*(prePos-absCenterOfDetector) << G4endl;
+	  //G4cout << "pos2: " << invRot*(prePos)-absCenterOfDetector << G4endl;
+	  */	  
+	  // Now let's finally provide pixel-centered coordinates for each hit
+	  // Build the center of the Pixel
+	  // G4ThreeVector centerOfPixel(
+	  // 			      m_gD->GetPixelX()*TMath::FloorNint(correctedPos.x() / m_gD->GetPixelX()) + m_gD->GetHalfPixelX(),
+	  // 			      m_gD->GetPixelY()*TMath::FloorNint(correctedPos.y() / m_gD->GetPixelY()) + m_gD->GetHalfPixelY(),
+	  // 			      0.); // in the middle of the tower
+	  
+	  // G4cout << "nalipour: center of pixel=" << centerOfPixel << G4endl;
+	  
+	  // // The position within the pixel !!!
+	  // correctedPos = correctedPos - centerOfPixel - m_relativePosOfSD;
+	  
+	  //G4cout << "uncorrectedPos : " << prePos.x()/um << " " << prePos.y()/um
+	  //	   << " " << prePos.z()/um << " [um]" << G4endl;
+	  
+	  // G4cout << "correctedPos : " << correctedPos.x()/um << " " << correctedPos.y()/um
+	  //        << " " << correctedPos.z()/um << " [um]" << G4endl;
+	  
+	  //G4cout << "(" << shi << ") "<<	 correctedPos.z()/um << " " ;
+	  //G4cout << TString::Format("(%02.0f) %02.1f ",shi,correctedPos.z()/um);
 	}
 
 	// Look at the touchablepost only if in the same volume, i.e. in the sensitive Si Box
@@ -268,6 +295,9 @@ G4bool AllPixTrackerSD::ProcessHits(G4Step * aStep, G4TouchableHistory *)
 	newHit->SetTrackPdgId(aParticle->GetPDGEncoding());
 
 	newHit->SetKinEParent( _kinEPrimary );
+
+	newHit->SetGlobalPosition(globalPosition); // nalipour
+	newHit->SetLocalPosition(localPosition); // nalipour
 
 	/////////////////////////////////////////////
 	g_temp_edep = edep;

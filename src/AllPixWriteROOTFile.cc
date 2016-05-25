@@ -20,6 +20,10 @@ AllPixWriteROOTFile::AllPixWriteROOTFile(Int_t detID, TString path)
   tree->Branch("posX_WithRespectToPixel", &posX_WithRespectToPixel);
   tree->Branch("posY_WithRespectToPixel", &posY_WithRespectToPixel);
   tree->Branch("posZ_WithRespectToPixel", &posZ_WithRespectToPixel);
+
+  tree->Branch("posX_Local", &posX_Local);
+  tree->Branch("posY_Local", &posY_Local);
+  tree->Branch("posZ_Local", &posZ_Local);
 /*
   tree->Branch("nHits_MC", &nHits_MC);
   tree->Branch("posX_MC", &posX_MC);
@@ -47,6 +51,10 @@ void AllPixWriteROOTFile::AllPixWriteROOTFillTree()
   posX_WithRespectToPixel.clear();
   posY_WithRespectToPixel.clear();
   posZ_WithRespectToPixel.clear();
+
+  posX_Local.clear();
+  posY_Local.clear();
+  posZ_Local.clear();
   /*
   posX_MC.clear();
   posY_MC.clear();
@@ -71,6 +79,10 @@ void AllPixWriteROOTFile::SetVectors(ROOTDataFormat* d)
 	posX_WithRespectToPixel=d->get_posX_WithRespectToPixel();
 	posY_WithRespectToPixel=d->get_posY_WithRespectToPixel();
 	posZ_WithRespectToPixel=d->get_posZ_WithRespectToPixel();
+
+	posX_Local=d->get_posX_Local();
+	posY_Local=d->get_posY_Local();
+	posZ_Local=d->get_posZ_Local();
 }
 
 void AllPixWriteROOTFile::AllPixCloseROOTFile()

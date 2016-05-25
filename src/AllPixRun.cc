@@ -286,6 +286,10 @@ void AllPixRun::RecordDigits_all(const G4Event* evt) // Fill Data with charge sh
        	MC_ROOT_data[i]->add_posX_WithRespectToPixel((*digitsCollection)[itr]->Get_posX_WithRespectoToPixel());
        	MC_ROOT_data[i]->add_posY_WithRespectToPixel((*digitsCollection)[itr]->Get_posY_WithRespectoToPixel());
        	MC_ROOT_data[i]->add_posZ_WithRespectToPixel((*digitsCollection)[itr]->Get_posZ_WithRespectoToPixel());
+
+       	MC_ROOT_data[i]->add_posX_Local((*digitsCollection)[itr]->Get_posX_Local());
+       	MC_ROOT_data[i]->add_posY_Local((*digitsCollection)[itr]->Get_posY_Local());
+       	MC_ROOT_data[i]->add_posZ_Local((*digitsCollection)[itr]->Get_posZ_Local());
       }
   }
 }

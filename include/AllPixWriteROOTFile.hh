@@ -55,6 +55,10 @@ public:
   std::vector<Double_t> posX_WithRespectToPixel;
   std::vector<Double_t> posY_WithRespectToPixel;
   std::vector<Double_t> posZ_WithRespectToPixel;
+
+  std::vector<Double_t> posX_Local;
+  std::vector<Double_t> posY_Local;
+  std::vector<Double_t> posZ_Local;
   /*
   Int_t nHits_MC;
   Int_t eventNB_MC;

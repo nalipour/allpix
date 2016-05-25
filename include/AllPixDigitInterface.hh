@@ -61,6 +61,14 @@ public:
 	virtual G4double Get_posY_WithRespectoToPixel();//nalipour
 	virtual G4double Get_posZ_WithRespectoToPixel();//nalipour
 
+	virtual void Set_posX_Local(G4double pos); //nalipour
+	virtual void Set_posY_Local(G4double pos); //nalipour
+	virtual void Set_posZ_Local(G4double pos); //nalipour
+	virtual G4double Get_posX_Local(); //nalipour
+	virtual G4double Get_posY_Local();//nalipour
+	virtual G4double Get_posZ_Local();//nalipour
+
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

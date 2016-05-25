@@ -101,6 +101,11 @@ void AllPixTMPXDigitizer::Digitize()
   // =========== To Correct later: If there is only one particle per frame ======
   G4double AvgPosX=0.0;
   G4double AvgPosY=0.0;
+  G4double AvgPosZ=0.0;
+
+  G4double LocalAvgPosX=0.0;
+  G4double LocalAvgPosY=0.0;
+  G4double LocalAvgPosZ=0.0;
   //=====================================================================
 
 
@@ -114,17 +119,48 @@ void AllPixTMPXDigitizer::Digitize()
       G4double ypos=(*hitsCollection)[itr]->GetPosWithRespectToPixel().y();
       G4double zpos=(*hitsCollection)[itr]->GetPosWithRespectToPixel().z()+thickness/2.0; // [mm]; zpos=thickness corresponds to the sensor side and zpos=0 corresponds to the pixel side
 
-      // G4cout << "xpos=" << xpos << ", ypos=" << ypos << ", zpos=" << zpos << G4endl;
+      // G4cout << "Pixel coord: x=" << tempPixel.first << ", y=" << tempPixel.second << G4endl;
+      // G4cout << "TMPX digitiser: xpos=" << xpos << ", ypos=" << ypos << ", zpos=" << zpos << G4endl;
+      // G4cout << "itr=" << itr << ", zpos=" << zpos << G4endl;
 
+      G4double global_xpos=(*hitsCollection)[itr]->GetGlobalPosition().x();
+      G4double global_ypos=(*hitsCollection)[itr]->GetGlobalPosition().y();
+      G4double global_zpos=(*hitsCollection)[itr]->GetGlobalPosition().z();
+
+      G4double local_xpos=(*hitsCollection)[itr]->GetLocalPosition().x();
+      G4double local_ypos=(*hitsCollection)[itr]->GetLocalPosition().y();
+      G4double local_zpos=(*hitsCollection)[itr]->GetLocalPosition().z();
+
+      // G4cout << "global_xpos=" << global_xpos << ", global_ypos=" << global_ypos << ", global_zpos=" << global_zpos << G4endl;
+      // G4cout << "local_xpos=" << local_xpos << ", local_ypos=" << local_ypos << ", local_zpos=" << local_zpos << G4endl;
+ 
       // AvgPosX+=tempPixel.first*pitchX+xpos+pitchX/2.0;
       // AvgPosY+=tempPixel.second*pitchY+ypos+pitchY/2.0;
 
+      // if (TMath::Abs(zpos-thickness/2)<0.002) // I take the hit position at the middle of the sensor because that's where the hit in EUTelescope is projected
+
+      // std::cout << "thickness=" << thickness << ", zpos=" << zpos << std::endl;
       // if (TMath::Abs(zpos-thickness)<0.002)
+      // if (TMath::Abs(zpos)<0.001)
       if (TMath::Abs(zpos-thickness/2.0)<0.002)
 	{
-	  AvgPosX=tempPixel.first*pitchX+xpos+pitchX/2.0;
-	  AvgPosY=tempPixel.second*pitchY+ypos+pitchY/2.0;
-	  // G4cout << "zpos=" << zpos << ", x=" << AvgPosX << ", y=" << AvgPosY << G4endl;
+	  // // Local positions
+	  // AvgPosX=tempPixel.first*pitchX+xpos+pitchX/2.0;
+	  // AvgPosY=tempPixel.second*pitchY+ypos+pitchY/2.0;
+	  // AvgPosZ=zpos;
+
+	  // G4cout << "******** zpos=" << zpos << G4endl;
+	  // // Global position
+	  AvgPosX=global_xpos;
+	  AvgPosY=global_ypos;
+	  AvgPosZ=global_zpos;
+
+	  LocalAvgPosX=local_xpos;
+	  LocalAvgPosY=local_ypos;
+	  LocalAvgPosZ=local_zpos;
+
+	  // G4cout << "TMPX digitizer: Global zpos=" << AvgPosZ << ", x=" << AvgPosX << ", y=" << AvgPosY << G4endl;
+	  // G4cout << "TMPX digitizer: Local zpos=" << LocalAvgPosZ << ", x=" << LocalAvgPosX << ", y=" << LocalAvgPosY << G4endl;
 	}
 
       // G4cout << "itr=" << itr << ", xpos=" << tempPixel.first*pitchX+xpos+pitchX/2.0 << ", ypos=" << tempPixel.second*pitchY+ypos+pitchY/2.0 << ", zpos=" << zpos << G4endl;
@@ -207,6 +243,11 @@ void AllPixTMPXDigitizer::Digitize()
   map<pair<G4int, G4int>, G4double >::iterator pCItr = pixelsContent.begin();
   for( ; pCItr != pixelsContent.end() ; pCItr++)
     {
+
+      tempPixel.first=(*pCItr).first.first;
+      tempPixel.second=(*pCItr).first.second;
+      
+      // G4cout << "********* Pixels hit: x=" << tempPixel.first << ", y=" << tempPixel.second << ", energy=" << (*pCItr).second/keV << " [keV]" << G4endl;
       // Double_t threshold=CLHEP::RandGauss::shoot(m_digitIn.thl, 35); // ~35 electrons noise on the threshold
       // Double_t threshold=m_digitIn.thl;
       //Double_t threshold=3.836+CLHEP::RandGauss::shoot(0, 0.057);
@@ -236,6 +277,7 @@ void AllPixTMPXDigitizer::Digitize()
 	  tempPixel.first=(*pCItr).first.first;
 	  tempPixel.second=(*pCItr).first.second;
 
+
 	  AllPixTMPXDigit * digit = new AllPixTMPXDigit;
 
 	  digit->SetPixelIDX((*pCItr).first.first);
@@ -245,6 +287,11 @@ void AllPixTMPXDigitizer::Digitize()
 	  // ====== TO be corrected later==================== //
 	  digit->Set_posX_WithRespectoToPixel(AvgPosX);// /nEntries);
 	  digit->Set_posY_WithRespectoToPixel(AvgPosY); // /nEntries);
+	  digit->Set_posZ_WithRespectoToPixel(AvgPosZ); // /nEntries);
+
+	  digit->Set_posX_Local(LocalAvgPosX);// /nEntries);
+	  digit->Set_posY_Local(LocalAvgPosY); // /nEntries);
+	  digit->Set_posZ_Local(LocalAvgPosZ); // /nEntries);
 	  //===================================================//
 
 	  // G4cout << "Energy=" << ((*pCItr).second)/keV << " [keV]" << G4endl;
@@ -256,6 +303,7 @@ void AllPixTMPXDigitizer::Digitize()
 
 	  if (TOT>0)
 	    {
+	      G4cout << "x=" << tempPixel.first << ", y=" << tempPixel.second << ", TOT=" << TOT << G4endl;
 	      digit->SetPixelCounts(TOT); //TOT value
 	      m_digitsCollection->insert(digit);
 	    }

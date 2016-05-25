@@ -46,6 +46,10 @@ private:
   G4double posY_WithRespectToPixel; //nalipour
   G4double posZ_WithRespectToPixel; //nalipour
 
+  G4double posX_Local; //nalipour
+  G4double posY_Local; //nalipour
+  G4double posZ_Local; //nalipour
+
 public:
   
   inline void SetPixelIDX(G4int pidX)   {pixelIDX = pidX;};
@@ -71,6 +75,13 @@ public:
   inline G4double Get_posX_WithRespectoToPixel() {return posX_WithRespectToPixel;}; //nalipour
   inline G4double Get_posY_WithRespectoToPixel() {return posY_WithRespectToPixel;}; //nalipour
   inline G4double Get_posZ_WithRespectoToPixel() {return posZ_WithRespectToPixel;}; //nalipour
+
+  inline void Set_posX_Local(G4double pos) {posX_Local=pos;}; //nalipour
+  inline void Set_posY_Local(G4double pos) {posY_Local=pos;}; //nalipour
+  inline void Set_posZ_Local(G4double pos) {posZ_Local=pos;}; //nalipour
+  inline G4double Get_posX_Local() {return posX_Local;}; //nalipour
+  inline G4double Get_posY_Local() {return posY_Local;}; //nalipour
+  inline G4double Get_posZ_Local() {return posZ_Local;}; //nalipour
 
 };
 
