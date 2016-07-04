@@ -303,11 +303,20 @@ void AllPixDetectorConstruction::SetDetectorRotation(G4ThreeVector rot){
 	}
 
 	// nalipour
-	m_rotVector[*m_detIdItr] = new G4RotationMatrix();
-	m_rotVector[*m_detIdItr]->rotateZ(rot.z());
-	m_rotVector[*m_detIdItr]->rotateX(rot.x());
-	m_rotVector[*m_detIdItr]->rotateY(rot.y());
+	// m_rotVector[*m_detIdItr] = new G4RotationMatrix();
+	// m_rotVector[*m_detIdItr]->rotateZ(rot.z());
+	// m_rotVector[*m_detIdItr]->rotateX(rot.x());
+	// m_rotVector[*m_detIdItr]->rotateY(rot.y());
 
+	G4RotationMatrix* rotmat=new G4RotationMatrix();
+	rotmat->rotateZ(rot.z());
+	rotmat->rotateX(rot.x());
+	rotmat->rotateY(rot.y());
+	// G4cout << "nalipour: Detector Construction: rotmat=" << *(rotmat) << G4endl;
+	
+	m_rotVector[*m_detIdItr] = new G4RotationMatrix(rotmat->inverse());
+	
+	// G4cout << "nalipour: Detector Construction: rotation matrix=" << *(m_rotVector[*m_detIdItr]) << G4endl;
 	//G4cout << m_rotVector[m_nRotations]->getPhi() << " "
 	// << m_rotVector[m_nRotations]->getPsi() << " "
 	// << m_rotVector[m_nRotations]->getTheta() << G4endl;
@@ -330,11 +339,18 @@ void AllPixDetectorConstruction::SetTestStructurePosition(G4ThreeVector pos){
 }
 
 void AllPixDetectorConstruction::SetTestStructureRotation(G4ThreeVector rot){
-	m_rotVectorTestStructure[m_nTestRotation] = new G4RotationMatrix();
-	m_rotVectorTestStructure[m_nTestRotation]->rotateZ(rot.z());
-	m_rotVectorTestStructure[m_nTestRotation]->rotateX(rot.x());
-	m_rotVectorTestStructure[m_nTestRotation]->rotateY(rot.y());
-
+  // nalipour
+  G4RotationMatrix* rotmat=new G4RotationMatrix();
+  rotmat->rotateZ(rot.z());
+  rotmat->rotateX(rot.x());
+  rotmat->rotateY(rot.y());
+  m_rotVectorTestStructure[m_nTestRotation] = new G4RotationMatrix(rotmat->inverse());
+  
+  // m_rotVectorTestStructure[m_nTestRotation] = new G4RotationMatrix();
+  // m_rotVectorTestStructure[m_nTestRotation]->rotateZ(rot.z());
+  // m_rotVectorTestStructure[m_nTestRotation]->rotateX(rot.x());
+  // m_rotVectorTestStructure[m_nTestRotation]->rotateY(rot.y());
+  
 	m_nTestRotation++;
 }
 
@@ -392,9 +408,17 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 
 	// Si
 	G4Material * Silicon = nistman->FindOrBuildMaterial("G4_Si");
+	G4cout << "nalipour: G4_Si: density=" << Silicon->GetDensity()/(g/cm3) << G4endl;
+	G4cout << "nalipour: G4_Si: rad len=" << Silicon->GetRadlen() << G4endl;
 
 	// this is supposed to be epoxy // FIXME
-	G4Material * Epoxy = nistman->FindOrBuildMaterial("G4_PLEXIGLASS");
+	G4Material * Epoxy = nistman->FindOrBuildMaterial("G4_BONE_COMPACT_ICRU");//("G4_PLEXIGLASS"); // nalipour: Changed to have something more similar to G10 with density 1.85 g/cm3 and X0=164.7
+	G4cout << "nalipour: Epoxy: density=" << Epoxy->GetDensity()/(g/cm3) << G4endl;
+	G4cout << "nalipour: Epoxy: rad len=" << Epoxy->GetRadlen() << G4endl;
+
+	// G4Material * nalipourTest1 = nistman->FindOrBuildMaterial("G4_BONE_COMPACT_ICRU");
+	// G4cout << "nalipour: nalipourTest1: density=" << nalipourTest1->GetDensity()/(g/cm3) << G4endl;
+	// G4cout << "nalipour: nalipourTest1: rad len=" << nalipourTest1->GetRadlen() << G4endl;
 
 	// Elements
 		G4Element* Sn = new G4Element("Tin", "Sn", 50., 118.710*g/mole);
