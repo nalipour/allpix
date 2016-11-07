@@ -850,12 +850,92 @@ void AllPixDetectorConstruction::BuildTestStructure(int){
 
 		break;
 	}
+	case 10:
+	  {
+	    TString fr_name = "" ;
+	    TString fr_name_log = "" ;
+	    TString physName = "";
+	    G4NistManager* nistman = G4NistManager::Instance();
+	    G4double z, a, density;
+	    G4String name, symbol;
+	    G4int ncomponents, natoms;
+	    
+	    a=12.0108*g/mole;
+	    G4Element* elC=new G4Element(name="Carbon", symbol="C", z=6, a);
+
+	    a=1.01*g/mole;
+	    G4Element* elH=new G4Element(name="Hydrogen", symbol="H", z=1, a);
+
+	    a=14.01*g/mole;
+	    G4Element* elN=new G4Element(name="Nitrogen", symbol="N", z=7, a);
+
+	    density = 1.07*g/cm3;
+	    G4Material* ABSplastic=new G4Material("ABSplastic", density, ncomponents=7);
+	    ABSplastic->AddElement(elC, natoms=8);
+	    ABSplastic->AddElement(elH, natoms=8);
+	    ABSplastic->AddElement(elC, natoms=4);
+	    ABSplastic->AddElement(elH, natoms=6);
+	    ABSplastic->AddElement(elC, natoms=3);
+	    ABSplastic->AddElement(elH, natoms=3);
+	    ABSplastic->AddElement(elN, natoms=1);
+
+	    G4cout << "nalipour: ABS Plastic density=" << ABSplastic->GetDensity()/(g/cm3) << G4endl;
+	    G4cout << "nalipour: ABS Plastic density=" << ABSplastic->GetRadlen() << G4endl;
+	    
+	    G4VisAttributes * scintAtt = new G4VisAttributes(G4Color(1,1,1,0.5));
+	    scintAtt->SetLineWidth(1);
+	    scintAtt->SetForceSolid(true);
+	    map<int, G4ThreeVector>::iterator testStructItr = m_posVectorTestStructure.begin();
+
+	    for( ; testStructItr != m_posVectorTestStructure.end() ; testStructItr++)
+	      {
+		
+		G4ThreeVector posRel = (*testStructItr).second;
+		G4RotationMatrix * rotRel = m_rotVector[m_detectorLinkTestStructure[(*testStructItr).first]];
+		
+		fr_name = "fr_box_";
+		fr_name += (*testStructItr).first;
+		
+		G4Box* FrontWindow = new G4Box(fr_name.Data(),
+					       22.5*mm,
+					       15*mm,
+					       1*mm);
+		
+		// logical
+		fr_name_log = "fr_log_";
+		fr_name_log += (*testStructItr).first;
+		
+		G4LogicalVolume * window_log_fr = new G4LogicalVolume(
+								      FrontWindow,
+								      ABSplastic,
+								      fr_name_log.Data());
+		window_log_fr->SetVisAttributes(scintAtt);
+			
+			
+
+
+		//Phyisical
+		
+		physName = "test_fr_phys_";
+		physName += (*testStructItr).first;
+		
+		new G4PVPlacement( rotRel,
+				   G4ThreeVector(posRel[0],posRel[1],posRel[2]),
+				   window_log_fr,
+				   physName.Data(),
+				   expHall_log,
+				   false,
+				   0,
+				   true);
+	      }
+	    break;
+	  }
 
 	default:
-	{
-		G4cout << "Unknown TestStructure Type" << G4endl;
-		break;
-	}
+	  {
+	    G4cout << "Unknown TestStructure Type" << G4endl;
+	    break;
+	  }
 	}
 
 #ifdef _EUTELESCOPE

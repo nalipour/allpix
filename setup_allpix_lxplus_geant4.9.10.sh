@@ -40,3 +40,6 @@ export PATH=$PATH:$G4WORKDIR
 
 
 source /afs/cern.ch/eng/clic/TBData/software/ROOT6_gcc48_python2.7/geant4/4.9.10.1p02/share/Geant4-10.1.2/geant4make/geant4make.sh
+
+#source /afs/cern.ch/eng/clic/software/Pixel_TestBeam_Software/geant4/share/Geant4-9.6.2/geant4make/geant4make.sh
+#source /cvmfs/ilc.desy.de/sw/x86_64_gcc44_sl6/geant4/10.01/share/Geant4-10.1.0/geant4make/geant4make.sh

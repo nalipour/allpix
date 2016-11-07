@@ -197,6 +197,7 @@ G4bool AllPixTrackerSD::ProcessHits(G4Step * aStep, G4TouchableHistory *)
 	  G4ThreeVector prePos = preStepPoint->GetPosition(); // Global position 
 	  correctedPos=touchablepre->GetHistory()->GetTopTransform().TransformPoint(prePos); // Position within the pixel
 
+	  // G4cout << "nalipour: rotMat=" << touchablepre->GetHistory()->GetTopTransform() << G4endl; 
 	  // depth 1 --> x
 	  // depth 0 --> y
 	  copyIDy_pre  = touchablepre->GetCopyNumber();
@@ -210,7 +211,8 @@ G4bool AllPixTrackerSD::ProcessHits(G4Step * aStep, G4TouchableHistory *)
 
 	  localPosition=localPos;
 	  globalPosition=prePos; //    nalipour: globalPosition
-	  // G4cout << "Global position:" << globalPosition << G4endl;
+
+	  // G4cout << "Global position:" << prePos << G4endl;
 	  // G4cout << "Local position:" << localPosition << G4endl;
 	  // G4cout << "Position within pixel=" << correctedPos << G4endl;
 	  // G4cout << "x=" << copyIDx_pre << ", x=" << copyIDy_pre << G4endl;

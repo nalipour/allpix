@@ -140,10 +140,13 @@ void AllPixTMPXDigitizer::Digitize()
       // if (TMath::Abs(zpos-thickness/2)<0.002) // I take the hit position at the middle of the sensor because that's where the hit in EUTelescope is projected
 
       // std::cout << "thickness=" << thickness << ", zpos=" << zpos << std::endl;
-      // if (TMath::Abs(zpos-thickness)<0.002)
+
       // if (TMath::Abs(zpos)<0.001)
-      if (TMath::Abs(zpos-thickness/2.0)<0.002)
+      // if (TMath::Abs(zpos-thickness)<0.002)
+      // G4cout << "zpos=" << zpos << ", local_zpos=" << local_zpos << G4endl;
+      if (TMath::Abs(zpos-thickness/2.0)<0.001) // Best solution
 	{
+	  // G4cout << "zpos=" << zpos << G4endl;
 	  // // Local positions
 	  // AvgPosX=tempPixel.first*pitchX+xpos+pitchX/2.0;
 	  // AvgPosY=tempPixel.second*pitchY+ypos+pitchY/2.0;
@@ -162,6 +165,7 @@ void AllPixTMPXDigitizer::Digitize()
 	  // G4cout << "TMPX digitizer: Global zpos=" << AvgPosZ << ", x=" << AvgPosX << ", y=" << AvgPosY << G4endl;
 	  // G4cout << "TMPX digitizer: Local zpos=" << LocalAvgPosZ << ", x=" << LocalAvgPosX << ", y=" << LocalAvgPosY << G4endl;
 	}
+
 
       // G4cout << "itr=" << itr << ", xpos=" << tempPixel.first*pitchX+xpos+pitchX/2.0 << ", ypos=" << tempPixel.second*pitchY+ypos+pitchY/2.0 << ", zpos=" << zpos << G4endl;
       // G4cout << "thickness=" << thickness << G4endl;
@@ -266,17 +270,35 @@ void AllPixTMPXDigitizer::Digitize()
       // // ((*pCItr).second)=CLHEP::RandGauss::shoot(((*pCItr).second), 5.0/100.0*((*pCItr).second)); //?????
 
       // G4cout << "threshold*elec/keV=" << threshold*elec/keV << G4endl;
+      
+      G4double a, b, c, t=0.0;
+      a=SurrogateA[tempPixel.first][tempPixel.second];
+      b=SurrogateB[tempPixel.first][tempPixel.second];
+      c=SurrogateC[tempPixel.first][tempPixel.second];
+      t=SurrogateT[tempPixel.first][tempPixel.second];
+      G4cout << a << " " << b << " " << c << " " << t << G4endl;
+      
 
+      G4double Threshold_electrons=(t*a-b+TMath::Sqrt((b+t*a)*(b+t*a)+4*a*c))/(2*a)*20.2; // electrons
+      //G4cout << " Threshold =" << Threshold_electrons << "[e-]"<< G4endl;
+      Threshold_electrons=Threshold_electrons*this->elec/keV;
+      //G4cout << " Threshold =" << Threshold_electrons << "[keV]"<< G4endl;
       
       //if(((*pCItr).second)/keV > threshold*elec/keV) // over threshold !
       // G4cout << "Threshold=" << Threshold << G4endl;
+
+      // if (Threshold_electrons>Threshold-50*this->elec/keV && Threshold_electrons<Threshold+50*this->elec/keV)
+      // 	{
+      // 	  Threshold=Threshold_electrons;
+      // 	}
+
       if(((*pCItr).second)/keV > Threshold) // over threshold !
 	{
 	  // test_counter++;
-	  // G4cout << "yes" << G4endl;
 	  tempPixel.first=(*pCItr).first.first;
 	  tempPixel.second=(*pCItr).first.second;
 
+	  G4cout << "Pixel x=" << tempPixel.first << ", y=" << tempPixel.second << G4endl;
 
 	  AllPixTMPXDigit * digit = new AllPixTMPXDigit;
 
@@ -292,11 +314,15 @@ void AllPixTMPXDigitizer::Digitize()
 	  digit->Set_posX_Local(LocalAvgPosX);// /nEntries);
 	  digit->Set_posY_Local(LocalAvgPosY); // /nEntries);
 	  digit->Set_posZ_Local(LocalAvgPosZ); // /nEntries);
+	  // G4cout << "nalipour: Global=(" << AvgPosX << ", " << AvgPosY << ", " << AvgPosZ << ")" << G4endl;
+	  // G4cout << "nalipour: Local=(" << LocalAvgPosX << ", " << LocalAvgPosY << ", " << LocalAvgPosZ << ")" << G4endl;
 	  //===================================================//
 
 	  // G4cout << "Energy=" << ((*pCItr).second)/keV << " [keV]" << G4endl;
 	  // G4cout << "Energy=" << ((*pCItr).second)/this->elec << " [electrons]" << G4endl;
-	  G4int TOT=energyToTOT(((*pCItr).second)/this->elec, SurrogateA[tempPixel.first][tempPixel.second], SurrogateB[tempPixel.first][tempPixel.second], SurrogateC[tempPixel.first][tempPixel.second], SurrogateT[tempPixel.first][tempPixel.second]);
+	  G4int TOT=energyToTOT(((*pCItr).second)/(this->elec*20.2), a, b, c, t);
+	  // G4cout << "yes: energy=" << ((*pCItr).second)/keV << ", TOT=" << TOT << G4endl;
+	  // G4int TOT=energyToTOT(((*pCItr).second)/this->elec, SurrogateA[tempPixel.first][tempPixel.second], SurrogateB[tempPixel.first][tempPixel.second], SurrogateC[tempPixel.first][tempPixel.second], SurrogateT[tempPixel.first][tempPixel.second]);
 
 	  // G4cout << "Energy=" << ((*pCItr).second)/keV << "[keV]" << ", Energy=" << ((*pCItr).second)/this->elec << " [electrons]" << ", TOT=" << TOT << G4endl;
 	  //TOT=a*((*pCItr).second)/keV+b-c/(((*pCItr).second/keV)-t);
@@ -343,6 +369,7 @@ void AllPixTMPXDigitizer::Digitize()
 
 void AllPixTMPXDigitizer::ReadCalibrationFile()
 {
+  G4String a, b, c, t="";
   SurrogateA = new G4double*[nPixX];
   SurrogateB = new G4double*[nPixX];
   SurrogateC = new G4double*[nPixX];
@@ -365,11 +392,24 @@ void AllPixTMPXDigitizer::ReadCalibrationFile()
 
       for (int j=0; j<nPixY; ++j)
 	{
-	  file_a >> SurrogateA[i][j];
-	  file_b >> SurrogateB[i][j];
-	  file_c >> SurrogateC[i][j];
-	  file_t >> SurrogateT[i][j];
-
+	  file_a >> a;
+	  file_b >> b;
+	  file_c >> c;
+	  file_t >> t;
+	  if (a!="nan" && b!="nan" && c!="nan" && t!="nan")
+	    {
+	      SurrogateA[i][j]=std::stod(a);
+	      SurrogateB[i][j]=std::stod(b);
+	      SurrogateC[i][j]=std::stod(c);
+	      SurrogateT[i][j]=std::stod(t);
+	    }
+	  else
+	    {
+	      SurrogateA[i][j]=0;
+	      SurrogateB[i][j]=0;
+	      SurrogateC[i][j]=0;
+	      SurrogateT[i][j]=0;
+	    }
 	  // G4cout << "a=" << SurrogateA[i][j] << ", b=" << SurrogateB[i][j] << ", c=" << SurrogateC[i][j] << ", t=" << SurrogateT[i][j] << G4endl;
 	}
     }

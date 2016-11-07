@@ -205,6 +205,10 @@ private:
 	map<int, G4LogicalVolume *>    m_Pixel_log;
 
 
+  // nalipour
+  map<int, G4LogicalVolume *>    m_Cooling_log;
+  map<int, G4VPhysicalVolume*>   m_Cooling_phys;
+
 
 	Allpix_BumpsParameterization * parameterization;
 

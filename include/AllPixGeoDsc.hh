@@ -94,10 +94,28 @@ public:
 	G4double GetPCBY(){return 2.*GetPCBX();};
 	G4double GetPCBZ(){return 2.*GetPCBX();};
 
+
+  // nalipour
+	G4double GetHalfCoolingX(){return m_cooling_hx;};
+	G4double GetHalfCoolingY(){return m_cooling_hy;};
+	G4double GetHalfCoolingZ(){return m_cooling_hz;};
+
+	G4double GetCoolingX(){return 2*m_cooling_hx;};
+	G4double GetCoolingY(){return 2*m_cooling_hy;};
+	G4double GetCoolingZ(){return 2*m_cooling_hz;};
+
+	G4double GetCoolingXOffset(){return m_sensor_posx;};
+	G4double GetCoolingYOffset(){return m_sensor_posy;};
+	G4double GetCoolingZOffset(){return GetHalfPCBZ();}; // See relation with GetHalfWrapperDZ()
+
+
+
 	// Wrapper
 	G4double GetHalfWrapperDX(){return GetHalfPCBX();};
 	G4double GetHalfWrapperDY(){return GetHalfPCBY();};
-	G4double GetHalfWrapperDZ(){return GetHalfPCBZ() + GetHalfSensorZ() + GetHalfChipZ();};
+  G4double GetHalfWrapperDZ(){
+    G4cout << "nalipour: GetHalfCoolingZ()=" << GetHalfCoolingZ() << G4endl;
+    return GetHalfPCBZ() + GetHalfSensorZ() + GetHalfChipZ()+ GetHalfCoolingZ();}; // nalipour
 
 	// World
 	G4double GetHalfWorldDX(){return 1000.*mm;};//GetNPixelsX()*GetPixelX();};
@@ -249,6 +267,19 @@ public:
 	void SetPCBHZ(G4double val){
 		m_pcb_hz = val;
 	}
+
+  // nalipour
+	void SetCoolingHX(G4double val){
+		m_cooling_hx = val;
+	}
+	void SetCoolingHY(G4double val){
+		m_cooling_hy = val;
+	}
+	void SetCoolingHZ(G4double val){
+		m_cooling_hz = val;
+	}
+
+
 	void SetResistivity(G4double val){
 		m_resistivity = val;
 	}
@@ -353,6 +384,11 @@ private:
 	G4double m_pcb_hx;
 	G4double m_pcb_hy;
 	G4double m_pcb_hz;
+
+  // nalipour
+  G4double m_cooling_hx;
+  G4double m_cooling_hy;
+  G4double m_cooling_hz;
 
 
 	G4double m_bump_radius;

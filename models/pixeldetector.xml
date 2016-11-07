@@ -6,58 +6,116 @@
 
 <!-- Timepix3 telescope planes-->
 
+<!-- <pixeldet id="300,301,302,303,304,305"> -->
+<!--   <digitizer>TMPX</digitizer> -->
+<!--   <npix_x>256</npix_x> -->
+<!--   <npix_y>256</npix_y> -->
+<!--   <npix_z>0</npix_z> -->
+
+<!--   <pixsize_x units="um">27.5</pixsize_x> -->
+<!--   <pixsize_y units="um">27.5</pixsize_y> -->
+<!--   <pixsize_z units="um">150.</pixsize_z> -->
+
+
+<!--   <chip_hx units="um">7040</chip_hx> -->
+<!--   <chip_hy units="um">7040</chip_hy> -->
+<!--   <chip_hz units="um">375.0</chip_hz> -->
+
+<!--   <chip_offsetx units="um">0.</chip_offsetx> -->
+<!--   <chip_offsety units="um">0.</chip_offsety> -->
+<!--   <chip_offsetz units="um">0.</chip_offsetz> -->
+
+<!--   <sensor_hx units="um">7040.</sensor_hx> -->
+<!--   <sensor_hy units="um">7040.</sensor_hy> -->
+<!--   <sensor_hz units="um">150.0</sensor_hz> -->
+
+<!--   <sensor_gr_excess_htop units="um">0.01</sensor_gr_excess_htop> -->
+<!--   <sensor_gr_excess_hbottom units="um">0.01</sensor_gr_excess_hbottom> -->
+<!--   <sensor_gr_excess_hright units="um">0.01</sensor_gr_excess_hright> -->
+<!--   <sensor_gr_excess_hleft units="um">0.01</sensor_gr_excess_hleft> -->
+
+<!--   <sensor_posx units="mm">0.</sensor_posx> -->
+<!--   <sensor_posy units="mm">0.</sensor_posy> -->
+<!--   <sensor_posz units="mm">0.</sensor_posz> -->
+
+
+<!--   <bump_radius units="um">7.0</bump_radius> -->
+<!--   <bump_height units="um">16.0</bump_height> -->
+<!--   <bump_offset_x units="um">0.0</bump_offset_x> -->
+<!--   <bump_offset_y units="um">0.0</bump_offset_y> -->
+<!--   <bump_dr units="um">1.0</bump_dr> -->
+
+
+<!--   <pcb_hx units="mm">7.040</pcb_hx> -->
+<!--   <pcb_hy units="mm">7.040</pcb_hy> -->
+<!--   <pcb_hz units="mm">0.88</pcb_hz> -->
+
+
+<!--   <Bias_Voltage>50.0</Bias_Voltage> -->
+<!--   <Depletion_Voltage>30.0</Depletion_Voltage> -->
+<!--   <Sensor_Type>p-in-n</Sensor_Type> -->
+<!--   <Chip_Threshold> 1000. </Chip_Threshold> -->
+<!--   <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/TelescopeCalib/cal_thr_dac_1210/</Calibration_File> -->
+
+<!-- </pixeldet> -->
+
+<!-- Timepix3 telescope planes-->
+
 <pixeldet id="300,301,302,303,304,305">
-<!-- <digitizer>MCTruth</digitizer> -->
-<digitizer>TMPX</digitizer>
-<npix_x>256</npix_x>
-<npix_y>256</npix_y>
-<npix_z>0</npix_z>
+  <digitizer>TMPX</digitizer>
+  <npix_x>256</npix_x>
+  <npix_y>256</npix_y>
+  <npix_z>0</npix_z>
 
-<pixsize_x units="um">27.5</pixsize_x>
-<pixsize_y units="um">27.5</pixsize_y>
-<pixsize_z units="um">150.</pixsize_z>
-<!-- <pixsize_z units="um">1.</pixsize_z> -->
+  <pixsize_x units="um">27.5</pixsize_x>
+  <pixsize_y units="um">27.5</pixsize_y>
+  <pixsize_z units="um">150.</pixsize_z>
+  <!-- <pixsize_z units="um">1.</pixsize_z> -->
 
-<chip_hx units="um">7055.5</chip_hx>
-<chip_hy units="um">8060</chip_hy>
-<chip_hz units="um">375.0</chip_hz>
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
 
-<chip_offsetx units="um">0.</chip_offsetx>
-<chip_offsety units="um">-1020.</chip_offsety>
-<chip_offsetz units="um">0.</chip_offsetz>
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
 
-<sensor_hx units="um">7040.</sensor_hx>
-<sensor_hy units="um">7040.</sensor_hy>
-<sensor_hz units="um">150.0</sensor_hz>
-<!-- <sensor_hz units="um">1.0</sensor_hz> -->
+  <sensor_hx units="um">7040.</sensor_hx>
+  <sensor_hy units="um">7040.</sensor_hy>
+  <sensor_hz units="um">150.0</sensor_hz>
+  <!-- <sensor_hz units="um">1.0</sensor_hz> -->
 
-<sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
-<sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
-<sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
-<sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
 
-<sensor_posx units="mm">0</sensor_posx>
-<sensor_posy units="mm">22.25</sensor_posy>
-<sensor_posz units="mm">0.</sensor_posz>
-
-
-<bump_radius units="um">7.0</bump_radius>
-<bump_height units="um">16.0</bump_height>
-<bump_offset_x units="um">0.0</bump_offset_x>
-<bump_offset_y units="um">0.0</bump_offset_y>
-<bump_dr units="um">1.0</bump_dr>
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
 
 
-<pcb_hx units="mm">23.50</pcb_hx>
-<pcb_hy units="mm">39.5</pcb_hy>
-<pcb_hz units="mm">0.88</pcb_hz>
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
 
 
-<Bias_Voltage>50.0</Bias_Voltage>
-<Depletion_Voltage>30.0</Depletion_Voltage>
-<Sensor_Type>p-in-n</Sensor_Type>
-<Chip_Threshold> 1000. </Chip_Threshold>
-<Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/TelescopeCalib/cal_thr_dac_1210/</Calibration_File>
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.7375</pcb_hz>
+
+  <cooling_hx units="um">8000.</cooling_hx>
+  <cooling_hy units="um">8000.</cooling_hy>
+  <cooling_hz units="um">112.5</cooling_hz>
+
+  <Bias_Voltage>50.0</Bias_Voltage>
+  <Depletion_Voltage>30.0</Depletion_Voltage>
+  <Sensor_Type>p-in-n</Sensor_Type>
+  <!-- <Chip_Threshold> 830 </Chip_Threshold> -->
+  <Chip_Threshold> 1000 </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0005_E02/cal_thr_1190_ik_10/</Calibration_File>
 
 </pixeldet>
 
@@ -106,13 +164,17 @@
 <pcb_hy units="mm">39.5</pcb_hy>
 <pcb_hz units="mm">0.88</pcb_hz>
 
+<cooling_hx units="um">7040.</cooling_hx>
+<cooling_hy units="um">7040.</cooling_hy>
+<cooling_hz units="um">50.0</cooling_hz>
+
 <Bias_Voltage>15.0</Bias_Voltage>
 <Depletion_Voltage>4.0</Depletion_Voltage>
 <Sensor_Type>n-in-p</Sensor_Type>
 
 
-<Chip_Threshold> 554. </Chip_Threshold>
-<Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0019_C07/cal_thr_dac_1148/</Calibration_File>
+<Chip_Threshold> 526. </Chip_Threshold>
+<Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0019_G07/cal_thr_1190_ik_10/</Calibration_File>
 
 </pixeldet>
 
@@ -120,7 +182,6 @@
 <!-- 100 um sensor-->
 <pixeldet id="100">
   <digitizer>TMPX</digitizer>
-  <!-- <digitizer>MCTruth</digitizer> -->
   
   <npix_x>256</npix_x>
   <npix_y>256</npix_y>
@@ -161,14 +222,19 @@
   
   <pcb_hx units="mm">23.50</pcb_hx>
   <pcb_hy units="mm">39.5</pcb_hy>
-  <pcb_hz units="mm">0.88</pcb_hz>
+  <pcb_hz units="mm">0.7375</pcb_hz>
+
+  <cooling_hx units="um">7040.</cooling_hx>
+  <cooling_hy units="um">7040.</cooling_hy>
+  <cooling_hz units="um">112.5</cooling_hz>
+
   
   <Bias_Voltage>20.0</Bias_Voltage>
   <Depletion_Voltage>10.0</Depletion_Voltage>
   <Sensor_Type>n-in-p</Sensor_Type>
 
-  <Chip_Threshold> 510. </Chip_Threshold>
-  <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1160/</Calibration_File>
+  <Chip_Threshold> 561. </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0005_E02/cal_thr_1160_ik_10/</Calibration_File>
 
   <!-- <Chip_Threshold> 826. </Chip_Threshold> -->
   <!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1190/</Calibration_File> -->
@@ -180,8 +246,8 @@
 
 
 <!-- 150 um sensor-->
-<pixeldet id="150">
-  <digitizer>MCTruth</digitizer>
+<pixeldet id="600">
+  <digitizer>TMPX</digitizer>
   
   <npix_x>256</npix_x>
   <npix_y>256</npix_y>
@@ -224,19 +290,18 @@
   <pcb_hy units="mm">39.5</pcb_hy>
   <pcb_hz units="mm">0.88</pcb_hz>
   
-  <Bias_Voltage>20.0</Bias_Voltage>
-  <Depletion_Voltage>10.0</Depletion_Voltage>
+  <cooling_hx units="um">7040.</cooling_hx>
+  <cooling_hy units="um">7040.</cooling_hy>
+  <cooling_hz units="um">112.5</cooling_hz>
+
+
+  <Bias_Voltage>30.0</Bias_Voltage>
+  <Depletion_Voltage>15.0</Depletion_Voltage>
   <Sensor_Type>n-in-p</Sensor_Type>
 
-  <Chip_Threshold> 510. </Chip_Threshold>
-  <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1160/</Calibration_File>
+  <Chip_Threshold> 555. </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0005_F01/cal_thr_1153_ik_10/</Calibration_File>
 
-  <!-- <Chip_Threshold> 826. </Chip_Threshold> -->
-  <!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1190/</Calibration_File> -->
-
-  <!-- <Chip_Threshold> 1037. </Chip_Threshold> -->
-  <!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1210/</Calibration_File> -->
-  
 </pixeldet>
 
 <!-- 50 um sensor, 25 um pitch-->
@@ -284,14 +349,323 @@
 <pcb_hy units="mm">39.5</pcb_hy>
 <pcb_hz units="mm">0.88</pcb_hz>
 
+<cooling_hx units="um">7040.</cooling_hx>
+<cooling_hy units="um">7040.</cooling_hy>
+<cooling_hz units="um">50.0</cooling_hz>
+
 <Bias_Voltage>15.0</Bias_Voltage>
 <Depletion_Voltage>4.0</Depletion_Voltage>
 <Sensor_Type>n-in-p</Sensor_Type>
 
 
-<Chip_Threshold> 554. </Chip_Threshold>
-<Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0019_C07/cal_thr_dac_1148/</Calibration_File>
+<!-- <Chip_Threshold> 554. </Chip_Threshold> -->
+<!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0019_C07/cal_thr_dac_1148/</Calibration_File> -->
+<Chip_Threshold> 505. </Chip_Threshold>
+<Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0019_G07/cal_thr_1190_ik_10/</Calibration_File>
 
 </pixeldet>
+
+
+
+<!-- 450 um sensor-->
+<pixeldet id="450">
+  <digitizer>MCTruth</digitizer>
+  
+  <npix_x>256</npix_x>
+  <npix_y>256</npix_y>
+  <npix_z>0</npix_z>
+  
+  <pixsize_x units="um">27.5</pixsize_x>
+  <pixsize_y units="um">27.5</pixsize_y>
+  <pixsize_z units="um">225.</pixsize_z>
+  
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
+  
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
+  
+  <sensor_hx units="um">7040.</sensor_hx>
+  <sensor_hy units="um">7040.</sensor_hy>
+  <sensor_hz units="um">225.0</sensor_hz>
+  
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+  
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
+  
+  
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
+  
+  
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.88</pcb_hz>
+  
+  <Bias_Voltage>20.0</Bias_Voltage>
+  <Depletion_Voltage>10.0</Depletion_Voltage>
+  <Sensor_Type>n-in-p</Sensor_Type>
+
+  <Chip_Threshold> 510. </Chip_Threshold>
+  <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1160/</Calibration_File>
+
+  <!-- <Chip_Threshold> 826. </Chip_Threshold> -->
+  <!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1190/</Calibration_File> -->
+
+  <!-- <Chip_Threshold> 1037. </Chip_Threshold> -->
+  <!-- <Calibration_File>/afs/cern.ch/work/n/nalipour/Allpix_Jan2016/allpix/calibrationFiles/W0005_E02/cal_thr_dac_1210/</Calibration_File> -->
+  
+</pixeldet>
+
+
+<!-- Timepix3 300 um sensor, p-in-n-->
+
+<pixeldet id="200">
+  <digitizer>TMPX</digitizer>
+  <npix_x>256</npix_x>
+  <npix_y>256</npix_y>
+  <npix_z>0</npix_z>
+
+  <pixsize_x units="um">27.5</pixsize_x>
+  <pixsize_y units="um">27.5</pixsize_y>
+  <pixsize_z units="um">150.</pixsize_z>
+
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
+
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
+
+  <sensor_hx units="um">7040.</sensor_hx>
+  <sensor_hy units="um">7040.</sensor_hy>
+  <sensor_hz units="um">150.0</sensor_hz>
+
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
+
+
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
+
+
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.813</pcb_hz>
+
+  <cooling_hx units="um">7040.</cooling_hx>
+  <cooling_hy units="um">7040.</cooling_hy>
+  <cooling_hz units="um">50.0</cooling_hz>
+
+
+  <Bias_Voltage>100.0</Bias_Voltage>
+  <Depletion_Voltage>30</Depletion_Voltage>
+  <Sensor_Type>p-in-n</Sensor_Type>
+  <!-- <Chip_Threshold> 525 </Chip_Threshold> -->
+  <!-- <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0002_J05/cal_thr_1170_ik_10/</Calibration_File> -->
+  <Chip_Threshold> 573 </Chip_Threshold>
+  <!-- <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0002_J05/cal_thr_1180_ik_10/</Calibration_File> -->
+  <!-- <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0018_G10/cal_thr_1065_ik_10/</Calibration_File> -->
+  <Calibration_File>/afs/cern.ch/work/n/nalipour/testBeamAnalysis/Timepix3/recoOctober2015/analysis/300umSensor/</Calibration_File> 
+
+</pixeldet>
+
+
+
+<!-- Smaller pixels for 50 um thick sensors -->
+
+<!-- 10 um pitch-->
+<pixeldet id="5010">
+  <digitizer>TMPX</digitizer>
+
+  <npix_x>1408</npix_x>
+  <npix_y>1408</npix_y>
+  <npix_z>0</npix_z>
+
+  <pixsize_x units="um">5</pixsize_x>
+  <pixsize_y units="um">5</pixsize_y>
+  <pixsize_z units="um">25.</pixsize_z>
+
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
+
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
+
+  <sensor_hx units="um">7040.</sensor_hx>
+  <sensor_hy units="um">7040.</sensor_hy>
+  <sensor_hz units="um">25.0</sensor_hz>
+
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
+
+
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
+
+
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.88</pcb_hz>
+
+  <cooling_hx units="um">7040.</cooling_hx>
+  <cooling_hy units="um">7040.</cooling_hy>
+  <cooling_hz units="um">50.0</cooling_hz>
+
+  <Bias_Voltage>15.0</Bias_Voltage>
+  <Depletion_Voltage>2.0</Depletion_Voltage>
+  <Sensor_Type>n-in-p</Sensor_Type>
+
+
+  <Chip_Threshold> 505. </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0019_G07/cal_thr_1190_ik_10/</Calibration_File>
+
+</pixeldet>
+
+
+<!-- 15 um pitch-->
+<pixeldet id="5015">
+  <digitizer>TMPX</digitizer>
+
+  <npix_x>940</npix_x>
+  <npix_y>940</npix_y>
+  <npix_z>0</npix_z>
+
+  <pixsize_x units="um">7.5</pixsize_x>
+  <pixsize_y units="um">7.5</pixsize_y>
+  <pixsize_z units="um">25.</pixsize_z>
+
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
+
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
+
+  <sensor_hx units="um">7050.</sensor_hx>
+  <sensor_hy units="um">7050.</sensor_hy>
+  <sensor_hz units="um">25.0</sensor_hz>
+
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
+
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
+
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.88</pcb_hz>
+
+  <cooling_hx units="um">7050.</cooling_hx>
+  <cooling_hy units="um">7050.</cooling_hy>
+  <cooling_hz units="um">50.0</cooling_hz>
+
+  <Bias_Voltage>15.0</Bias_Voltage>
+  <Depletion_Voltage>2.0</Depletion_Voltage>
+  <Sensor_Type>n-in-p</Sensor_Type>
+
+  <Chip_Threshold> 505. </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0019_G07/cal_thr_1190_ik_10/</Calibration_File>
+</pixeldet>
+
+
+
+
+<!-- 20 um pitch-->
+<pixeldet id="5020">
+  <digitizer>TMPX</digitizer>
+
+  <npix_x>704</npix_x>
+  <npix_y>704</npix_y>
+  <npix_z>0</npix_z>
+
+  <pixsize_x units="um">10</pixsize_x>
+  <pixsize_y units="um">10</pixsize_y>
+  <pixsize_z units="um">25.</pixsize_z>
+
+  <chip_hx units="um">7055.5</chip_hx>
+  <chip_hy units="um">8060</chip_hy>
+  <chip_hz units="um">375.0</chip_hz>
+
+  <chip_offsetx units="um">0.</chip_offsetx>
+  <chip_offsety units="um">-1020.</chip_offsety>
+  <chip_offsetz units="um">0.</chip_offsetz>
+
+  <sensor_hx units="um">7040.</sensor_hx>
+  <sensor_hy units="um">7040.</sensor_hy>
+  <sensor_hz units="um">25.0</sensor_hz>
+
+  <sensor_gr_excess_htop units="um">50.0</sensor_gr_excess_htop>
+  <sensor_gr_excess_hbottom units="um">50.0</sensor_gr_excess_hbottom>
+  <sensor_gr_excess_hright units="um">50.0</sensor_gr_excess_hright>
+  <sensor_gr_excess_hleft units="um">50.0</sensor_gr_excess_hleft>
+
+  <sensor_posx units="mm">0</sensor_posx>
+  <sensor_posy units="mm">22.25</sensor_posy>
+  <sensor_posz units="mm">0.</sensor_posz>
+
+  <bump_radius units="um">7.0</bump_radius>
+  <bump_height units="um">16.0</bump_height>
+  <bump_offset_x units="um">0.0</bump_offset_x>
+  <bump_offset_y units="um">0.0</bump_offset_y>
+  <bump_dr units="um">1.0</bump_dr>
+
+  <pcb_hx units="mm">23.50</pcb_hx>
+  <pcb_hy units="mm">39.5</pcb_hy>
+  <pcb_hz units="mm">0.88</pcb_hz>
+
+  <cooling_hx units="um">7040.</cooling_hx>
+  <cooling_hy units="um">7040.</cooling_hy>
+  <cooling_hz units="um">50.0</cooling_hz>
+
+  <Bias_Voltage>15.0</Bias_Voltage>
+  <Depletion_Voltage>2.0</Depletion_Voltage>
+  <Sensor_Type>n-in-p</Sensor_Type>
+
+  <Chip_Threshold> 505. </Chip_Threshold>
+  <Calibration_File>/eos/clicdp/grid/ilc/user/c/clictel/Calibration_October_2015/W0019_G07/cal_thr_1190_ik_10/</Calibration_File>
+</pixeldet>
+
 
 </detectors>

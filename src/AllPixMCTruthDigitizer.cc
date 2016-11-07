@@ -153,11 +153,12 @@ void AllPixMCTruthDigitizer::Digitize(){
   if(MC_deposited_energy>0)
     {
       AllPixMCTruthDigit * digit = new AllPixMCTruthDigit;
-      digit->SetPixelEnergyDep(MC_deposited_energy/keV);
+      digit->SetPixelEnergyDep(MC_deposited_energy/keV*1000);
       digit->SetPixelIDX(pixelX); // An ugly hack to have the same coordinate system as the test-beam
       digit->SetPixelIDY(pixelY);	 
       digit->IncreasePixelCounts(); // Counting mode
       m_digitsCollection->insert(digit);
+      G4cout << "X=" << pixelX << ", Y=" << pixelY << ", energy=" << MC_deposited_energy/keV*1000 << G4endl;
 	
     }
 

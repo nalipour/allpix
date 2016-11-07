@@ -412,7 +412,9 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 	G4cout << "nalipour: G4_Si: rad len=" << Silicon->GetRadlen() << G4endl;
 
 	// this is supposed to be epoxy // FIXME
-	G4Material * Epoxy = nistman->FindOrBuildMaterial("G4_BONE_COMPACT_ICRU");//("G4_PLEXIGLASS"); // nalipour: Changed to have something more similar to G10 with density 1.85 g/cm3 and X0=164.7
+	G4Material * Epoxy = nistman->FindOrBuildMaterial("G4_BONE_COMPACT_ICRU");//("G4_PLEXIGLASS"); 
+	// nalipour: Changed to have something more similar to G10 with density 1.85 g/cm3 and X0=164.7.
+
 	G4cout << "nalipour: Epoxy: density=" << Epoxy->GetDensity()/(g/cm3) << G4endl;
 	G4cout << "nalipour: Epoxy: rad len=" << Epoxy->GetRadlen() << G4endl;
 
@@ -421,13 +423,17 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 	// G4cout << "nalipour: nalipourTest1: rad len=" << nalipourTest1->GetRadlen() << G4endl;
 
 	// Elements
-		G4Element* Sn = new G4Element("Tin", "Sn", 50., 118.710*g/mole);
-		G4Element* Pb = new G4Element("Lead","Pb", 82., 207.2*g/mole);
+	G4Element* Sn = new G4Element("Tin", "Sn", 50., 118.710*g/mole);
+	G4Element* Pb = new G4Element("Lead","Pb", 82., 207.2*g/mole);
 
 	// Materials from Combination, SnPb eutectic
 	G4Material* Solder = new G4Material("Solder", 8.4*g/cm3, 2);
 	Solder->AddElement(Sn,63);
 	Solder->AddElement(Pb,37);
+
+	G4Material* coolingCopper=nistman->FindOrBuildMaterial("G4_Cu"); // nalipour: cooling copper
+	G4cout << "nalipour: Copper: density=" << coolingCopper->GetDensity()/(g/cm3) << G4endl;
+	G4cout << "nalipour: Copper: rad len=" << coolingCopper->GetRadlen() << G4endl;
 
 
 	///////////////////////////////////////////////////////////////////////
@@ -472,6 +478,11 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 	wrapperVisAtt->SetForceSolid(false);
 	wrapperVisAtt->SetVisibility(false);
 
+	// nalipour
+	G4VisAttributes * coolingCuVisAtt = new G4VisAttributes(G4Color::Yellow());
+	coolingCuVisAtt->SetLineWidth(1);
+	coolingCuVisAtt->SetForceSolid(true);
+
 	///////////////////////////////////////////////////////////////////////
 
 
@@ -494,6 +505,7 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 	pair<G4String, G4String> SDName = make_pair("BoxSD", "");
 	pair<G4String, G4String> BumpName = make_pair("Bump", "");
 	pair<G4String, G4String> BumpBoxName = make_pair("BumpBox", "");
+	pair<G4String, G4String> coolingCopperName = make_pair("CoolingCu", ""); // nalipour
 
 	// log an phys
 	G4cout << "Building " << nOfDevices << " device(s) ..." << G4endl;
@@ -570,6 +582,7 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
  		SDName.second = SDName.first + "_" + temp; // BoxSD_XXX
  		BumpName.second = BumpName.first + "_" + temp; // BoxSD_XXX
  		BumpBoxName.second = BumpBoxName.first + "_" + temp; // BoxSD_XXX
+		coolingCopperName.second = coolingCopperName.first + "_" + temp; // nalipour
 
 		// Solids, I want different objects/names per medipix
 		//  later on, they could be different
@@ -605,6 +618,16 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 				geoMap[*detItr]->GetHalfPCBY(),
 				geoMap[*detItr]->GetHalfPCBZ());
 		}
+
+		// ----------- nalipour ----------- //
+		G4Box* CoolingCu_box = 0;
+		if(geoMap[*detItr]->GetHalfCoolingZ()!=0){
+		  CoolingCu_box = new G4Box(coolingCopperName.second,
+					  geoMap[*detItr]->GetHalfCoolingX(),
+					  geoMap[*detItr]->GetHalfCoolingY(),
+					  geoMap[*detItr]->GetHalfCoolingZ());
+		}
+		// ----------- END nalipour ----------- //
 
 		// The wrapper might be enhanced when the user set up
 		//  Appliances to the detector (extra layers, etc).
@@ -696,6 +719,13 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 				ChipName.second+"_log");
 		m_Chip_log[(*detItr)]->SetVisAttributes(ChipVisAtt);
 
+		// nalipour
+		m_Cooling_log[(*detItr)] = new G4LogicalVolume(CoolingCu_box,
+				coolingCopper,
+				coolingCopperName.second+"_log");
+		m_Cooling_log[(*detItr)]->SetVisAttributes(coolingCuVisAtt);
+		
+
 		if(geoMap[*detItr]->GetBumpHeight()!=0.0){
 		///////////////////////////////////////////////////////////
 		// Bumps
@@ -724,6 +754,7 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 		G4ThreeVector posBumps(0,0,0);
 		G4ThreeVector posChip(0,0,0);
 		G4ThreeVector posPCB(0,0,0);
+		G4ThreeVector posCooling(0,0,0); // nalipour
 
 		// Apply position Offset for the detector due to the enhancement
 		if(m_vectorWrapperEnhancement.find(*detItr) != m_vectorWrapperEnhancement.end()){
@@ -731,9 +762,6 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 			posDevice.setY(posDevice.y() - m_vectorWrapperEnhancement[*detItr].y()/2.);
 			posDevice.setZ(posDevice.z() - m_vectorWrapperEnhancement[*detItr].z()/2.);
 		}
-
-
-
 
 
 		// Calculation of position of the different physical volumes
@@ -758,10 +786,16 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 		posPCB.setY(posDevice.y()-1*geoMap[*detItr]->GetSensorYOffset());
 		posPCB.setZ(posDevice.z()-geoMap[*detItr]->GetHalfSensorZ()-2*geoMap[*detItr]->GetHalfChipZ() -geoMap[*detItr]->GetHalfPCBZ()-bump_height);
 
+		// nalipour
+		posCooling.setX(posDevice.x() + geoMap[*detItr]->GetChipXOffset());
+		posCooling.setY(posDevice.y() + geoMap[*detItr]->GetChipYOffset());
+		posCooling.setZ(posDevice.z()-geoMap[*detItr]->GetHalfSensorZ()-2*geoMap[*detItr]->GetHalfChipZ() -2*geoMap[*detItr]->GetHalfPCBZ()-bump_height-geoMap[*detItr]->GetHalfCoolingZ());
+
 		G4cout << "Sensor Position " << posDevice << endl;
 		G4cout << "Bumps Position " << posBumps << endl;
 		G4cout << "Chip Position " << posChip << endl;
 		G4cout << "PCB Position " << posPCB << endl;
+		G4cout << "nalipour: Cooling Position " << posCooling << endl; // nalipour
 
 
 	     /*------------------------------------ Physical placement  ----------------------------------------*/
@@ -789,6 +823,18 @@ void AllPixDetectorConstruction::BuildPixelDevices(map<int, AllPixGeoDsc *> geoM
 				false,
 				(*detItr), // copy number
 				true); // check overlap
+
+		// nalipour
+		m_Cooling_phys[(*detItr)] = new G4PVPlacement(0,
+				posCooling,
+				m_Cooling_log[(*detItr)],
+				coolingCopperName.second+"_phys",
+				m_wrapper_log[(*detItr)], // mother log
+				false,
+				(*detItr), // copy number
+				true); // check overlap
+
+
 		if(geoMap[*detItr]->GetBumpHeight()!=0.0){
 		m_Bumps_phys[(*detItr)] = new G4PVPlacement(0,
 				posBumps,

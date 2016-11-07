@@ -95,7 +95,7 @@
 
 //nalipour
 #include "G4PAIModel.hh"
-#include "G4PAIPhotonModel.hh"
+#include "G4PAIPhotModel.hh"
 
 
 #include "CLHEP/Units/SystemOfUnits.h"
@@ -105,7 +105,7 @@ using namespace CLHEP;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....
 
 AllPixPhysicsList::AllPixPhysicsList() : G4VModularPhysicsList()
-										, fConfig(0) //nalipour PAI
+				       , fConfig(0) //nalipour PAI
 {
   fConfig = G4LossTableManager::Instance()->EmConfigurator(); //nalipour PAI
   G4LossTableManager::Instance()->SetVerbose(1); //nalipour PAI
@@ -518,7 +518,7 @@ void AllPixPhysicsList::NewPAIModel(const G4ParticleDefinition* part,
     fConfig->SetExtraEmModel(partname,procname,pai,"",
                               0.0,100.*TeV,pai);
   } else if(modname == "pai_photon") {
-    G4PAIPhotonModel* pai = new G4PAIPhotonModel(part,"PAIPhotonModel");
+    G4PAIPhotModel* pai = new G4PAIPhotModel(part,"PAIPhotModel");
     fConfig->SetExtraEmModel(partname,procname,pai,"",
                               0.0,100.*TeV,pai);
   }

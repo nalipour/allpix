@@ -56,6 +56,11 @@
 
 #define __digitizer_S "digitizer"
 
+// nalipour
+#define __cooling_hx_S "cooling_hx"
+#define __cooling_hy_S "cooling_hy"
+#define __cooling_hz_S "cooling_hz"
+
 #define __pcb_hx_S "pcb_hx"
 #define __pcb_hy_S "pcb_hy"
 #define __pcb_hz_S "pcb_hz"
